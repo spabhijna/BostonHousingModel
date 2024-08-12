@@ -9,7 +9,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import joblib
 
 #load the data set
-file_path = "BostonHousingModel/Boston Housing Data.csv"
+file_path = "/Volumes/Code/BostonHousingModel/data/Boston Housing Data.csv"
 df = pd.read_csv(file_path)
 
 #display the first few rows 

@@ -31,7 +31,7 @@ def make_prediction(model, input_df):
     return prediction[0]
 
 if __name__ == "__main__":
-    model_path = model_path = '/Volumes/Code/BostonHousingModel/linear_regression_model.pkl'
+    model_path = model_path = '/Volumes/Code/BostonHousingModel/models/linear_regression_model.pkl'
     model = load_model(model_path)
 
     # Get user input and make prediction

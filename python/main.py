@@ -5,7 +5,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # Load the trained model
-model = joblib.load('/Volumes/Code/BostonHousingModel/linear_regression_model.pkl')
+model = joblib.load('/Volumes/Code/BostonHousingModel/models/linear_regression_model.pkl')
 
 @app.route(rule='/')
 def home():
