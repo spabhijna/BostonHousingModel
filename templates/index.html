@@ -30,7 +30,7 @@
         }
 
         .container {
-            max-width: 800px; /* Increase width for prediction display */
+            max-width: 600px;
             margin: 20px auto;
             padding: 20px;
             background-color: var(--background-color-light);
@@ -108,18 +108,6 @@
             font-size: 18px;
             text-align: center;
         }
-
-        /* New styles for prediction display */
-        .prediction-container {
-            display: flex;
-            flex-direction: column;
-            margin-top: 20px;
-        }
-
-        .prediction-label {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
     </style>
 </head>
 <body>
@@ -130,50 +118,54 @@
             <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
         </div>
         
-        <form id="prediction-form" onsubmit="handleSubmit(event)">
+        <form action="/predict" method="POST">
             <label for="CRIM">CRIM (per capita crime rate by town):</label>
-            <input type="text" id="CRIM" name="CRIM" required>
+            <input type="text" name="CRIM" required>
 
             <label for="ZN">ZN (proportion of residential land zoned):</label>
-            <input type="text" id="ZN" name="ZN" required>
+            <input type="text" name="ZN" required>
 
             <label for="INDUS">INDUS (proportion of non-retail business acres):</label>
-            <input type="text" id="INDUS" name="INDUS" required>
+            <input type="text" name="INDUS" required>
 
             <label for="CHAS">CHAS (Charles River dummy variable):</label>
-            <input type="text" id="CHAS" name="CHAS" required>
+            <input type="text" name="CHAS" required>
 
             <label for="NOX">NOX (nitric oxides concentration):</label>
-            <input type="text" id="NOX" name="NOX" required>
+            <input type="text" name="NOX" required>
 
             <label for="RM">RM (average number of rooms per dwelling):</label>
-            <input type="text" id="RM" name="RM" required>
+            <input type="text" name="RM" required>
 
             <label for="AGE">AGE (proportion of owner-occupied units built prior to 1940):</label>
-            <input type="text" id="AGE" name="AGE" required>
+            <input type="text" name="AGE" required>
 
             <label for="DIS">DIS (weighted distances to employment centers):</label>
-            <input type="text" id="DIS" name="DIS" required>
+            <input type="text" name="DIS" required>
 
             <label for="RAD">RAD (index of accessibility to radial highways):</label>
-            <input type="text" id="RAD" name="RAD" required>
+            <input type="text" name="RAD" required>
 
             <label for="TAX">TAX (property tax rate per $10,000):</label>
-            <input type="text" id="TAX" name="TAX" required>
+            <input type="text" name="TAX" required>
 
             <label for="PTRATIO">PTRATIO (pupil-teacher ratio by town):</label>
-            <input type="text" id="PTRATIO" name="PTRATIO" required>
+            <input type="text" name="PTRATIO" required>
 
             <label for="B">B (1000(Bk - 0.63)^2 where Bk is the proportion of Black residents):</label>
-            <input type="text" id="B" name="B" required>
+            <input type="text" name="B" required>
 
             <label for="LSTAT">LSTAT (percentage of lower status of the population):</label>
-            <input type="text" id="LSTAT" name="LSTAT" required>
+            <input type="text" name="LSTAT" required>
 
             <button type="submit">Predict</button>
         </form>
 
-        <div id="prediction-output" class="prediction-container"></div>
+        {% if prediction_text %}
+            <div class="prediction">
+                <h2>{{ prediction_text }}</h2>
+            </div>
+        {% endif %}
     </div>
 
     <script>
@@ -181,37 +173,6 @@
             const body = document.body;
             const isDarkMode = body.classList.toggle('dark-mode');
             document.getElementById('theme-toggle').checked = isDarkMode;
-        }
-
-        function handleSubmit(event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            // Gather the input values
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData.entries());
-
-            // Here you would typically send the data to the backend for prediction
-            // For demonstration, let's simulate a prediction result
-            const predictionText = `Predicted Price: $${(Math.random() * 500000 + 100000).toFixed(2)}`; // Random prediction
-            
-            // Update the prediction output without losing input values
-            const output = `
-                <div class="prediction-label">${predictionText}</div>
-                <div>CRIM: ${data.CRIM}</div>
-                <div>ZN: ${data.ZN}</div>
-                <div>INDUS: ${data.INDUS}</div>
-                <div>CHAS: ${data.CHAS}</div>
-                <div>NOX: ${data.NOX}</div>
-                <div>RM: ${data.RM}</div>
-                <div>AGE: ${data.AGE}</div>
-                <div>DIS: ${data.DIS}</div>
-                <div>RAD: ${data.RAD}</div>
-                <div>TAX: ${data.TAX}</div>
-                <div>PTRATIO: ${data.PTRATIO}</div>
-                <div>B: ${data.B}</div>
-                <div>LSTAT: ${data.LSTAT}</div>
-            `;
-            document.getElementById('prediction-output').innerHTML = output;
         }
     </script>
 </body>
